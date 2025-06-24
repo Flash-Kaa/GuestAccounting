@@ -1,4 +1,4 @@
-package com.flasska.guestaccounting.ui.theme
+package com.flasska.guestaccounting.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

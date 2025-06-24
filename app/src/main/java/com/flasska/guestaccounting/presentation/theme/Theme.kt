@@ -1,6 +1,5 @@
-package com.flasska.guestaccounting.ui.theme
+package com.flasska.guestaccounting.presentation.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
