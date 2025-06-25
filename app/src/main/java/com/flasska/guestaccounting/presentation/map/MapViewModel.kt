@@ -3,8 +3,6 @@ package com.flasska.guestaccounting.presentation.map
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.flasska.guestaccounting.domain.model.Guest
-import com.flasska.guestaccounting.domain.model.Table
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,24 +16,14 @@ internal class MapViewModel : ViewModel() {
 
     fun processEvent(event: MapScreenEvent) {
         when (event) {
-            is MapScreenEvent.AddTable -> addTable(event)
             is MapScreenEvent.DeleteGuest -> deleteGuest(event)
             is MapScreenEvent.DeleteTable -> deleteTable(event)
-        }
-    }
-
-    private fun addTable(event: MapScreenEvent.AddTable) {
-        viewModelScope.launch(Dispatchers.Default) {
-            _state.update {
-                it.copy(
-                    it.tables + Table(number = it.tables.size + 1, capacity = event.capacity)
-                )
-            }
+            is MapScreenEvent.UpdateBottomSheetState -> openBottomSheet(event)
         }
     }
 
     private fun deleteGuest(event: MapScreenEvent.DeleteGuest) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             _state.update {
                 it.copy(
                     it.tables.map { table ->
@@ -53,13 +41,22 @@ internal class MapViewModel : ViewModel() {
     }
 
     private fun deleteTable(event: MapScreenEvent.DeleteTable) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             _state.update {
                 it.copy(it.tables - event.table)
             }
         }
     }
 
+    private fun openBottomSheet(event: MapScreenEvent.UpdateBottomSheetState) {
+        viewModelScope.launch(Dispatchers.Default) {
+            _state.update {
+                it.copy(
+                    bottomSheetState = event.type,
+                )
+            }
+        }
+    }
 
     class Factory : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")

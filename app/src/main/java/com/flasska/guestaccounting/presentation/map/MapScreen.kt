@@ -9,9 +9,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.flasska.guestaccounting.R
 import com.flasska.guestaccounting.presentation.common.table.AddTableButton
 import com.flasska.guestaccounting.presentation.common.table.TableInfo
+import com.flasska.guestaccounting.presentation.guest_creator.GuestCreatorDialog
+import com.flasska.guestaccounting.presentation.table_creator.TableCreatorDialog
+import com.flasska.guestaccounting.utils.LocalAppComponent
 
 @Composable
 internal fun MapScreen(
@@ -38,14 +42,35 @@ private fun Content(
             TableInfo(
                 table = table,
                 onDelete = { processEvent(MapScreenEvent.DeleteTable(table)) },
-                onDeleteGuest = { guest -> processEvent(MapScreenEvent.DeleteGuest(guest)) }
+                onDeleteGuest = { guest -> processEvent(MapScreenEvent.DeleteGuest(guest)) },
+                onAddGuest = {
+                    processEvent(MapScreenEvent.UpdateBottomSheetState(MapScreenState.BottomSheetType.AddTable))
+                },
             )
         }
 
         item {
             AddTableButton(
-                onClick = { /*TODO processEvent(MapScreenEvent.AddTable)*/ }
+                onClick = {
+                    processEvent(MapScreenEvent.UpdateBottomSheetState(MapScreenState.BottomSheetType.AddTable))
+                }
             )
         }
+    }
+
+    if (state.bottomSheetState == MapScreenState.BottomSheetType.AddTable) {
+        TableCreatorDialog(
+            viewModel = viewModel(factory = LocalAppComponent.provideTableCreatorViewModel()),
+            onDismiss = {
+                processEvent(MapScreenEvent.UpdateBottomSheetState(MapScreenState.BottomSheetType.None))
+            },
+        )
+    } else if (state.bottomSheetState == MapScreenState.BottomSheetType.AddGuest) {
+        GuestCreatorDialog(
+            viewModel = viewModel(factory = LocalAppComponent.provideGuestCreatorViewModel()),
+            onDismiss = {
+                processEvent(MapScreenEvent.UpdateBottomSheetState(MapScreenState.BottomSheetType.None))
+            },
+        )
     }
 }

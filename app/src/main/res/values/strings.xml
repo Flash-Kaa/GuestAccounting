@@ -8,4 +8,14 @@
     <string name="table_number">Стол №%1$s</string>
     <string name="add_guest">Добавить гостя</string>
     <string name="add_table">Добавить стол</string>
+    <string name="table_capacity">Сколько человек может сидеть за столом?</string>
+    <string name="add">Добавить</string>
+    <string name="create_table">Создание стола</string>
+    <string name="choose_gender">Выберите пол</string>
+    <string name="choose_size_of_wedding">С чьей стороны гость?</string>
+    <string name="grooms">Жениха</string>
+    <string name="brides">Невесты</string>
+    <string name="neutrals">Нейтральная сторона</string>
+    <string name="age_input">Введите возраст</string>
+    <string name="name_input">Введите имя</string>
 </resources>

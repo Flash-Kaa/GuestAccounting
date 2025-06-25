@@ -4,9 +4,12 @@
     <dimen name="arrangement_space">8dp</dimen>
     <dimen name="horizontal_padding">8dp</dimen>
     <dimen name="card_round">16dp</dimen>
+    <dimen name="create_padding">24dp</dimen>
+    <dimen name="create_arrangement_space">12dp</dimen>
 
     <!--  Table  -->
     <dimen name="table_content_padding">16dp</dimen>
+    <dimen name="table_padding">16dp</dimen>
     <dimen name="short_images_space">12dp</dimen>
     <dimen name="min_short_images_size">12dp</dimen>
     <dimen name="add_table_button_arrangement_space">24dp</dimen>
@@ -25,9 +28,7 @@
     <dimen name="guest_full_icon_size">48dp</dimen>
     <dimen name="guest_full_divider_width">1dp</dimen>
     <dimen name="guest_full_title_bottom_padding">8dp</dimen>
-
     <dimen name="guest_short_padding">2dp</dimen>
-
     <dimen name="add_guest_button_padding">4dp</dimen>
     <dimen name="add_guest_button_arrangement_space">24dp</dimen>
     <dimen name="add_guest_button_content_padding">8dp</dimen>
