@@ -14,7 +14,6 @@ import com.flasska.guestaccounting.presentation.theme.GuestAccountingTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             GuestAccountingTheme {
                 Scaffold(

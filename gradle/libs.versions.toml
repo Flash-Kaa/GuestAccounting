@@ -13,6 +13,7 @@ roomKtx = "2.7.0"
 daggerAndroid = "2.52"
 kotlinxSerializationJson = "1.7.1"
 kotlinxSerialization = "2.0.20"
+animationCoreAndroid = "1.7.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,7 @@ dagger-android = { module = "com.google.dagger:dagger-android", version.ref = "d
 dagger-android-processor = { module = "com.google.dagger:dagger-android-processor", version.ref = "daggerAndroid" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "daggerAndroid" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+androidx-animation-core-android = { group = "androidx.compose.animation", name = "animation-core-android", version.ref = "animationCoreAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

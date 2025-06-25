@@ -1,5 +1,7 @@
 package com.flasska.guestaccounting.presentation.map
 
+import com.flasska.guestaccounting.domain.model.Table
+
 internal data class MapScreenState(
-    val noto: String = ""
+    val tables: List<Table> = emptyList(),
 )

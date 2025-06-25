@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GuestAccounting</string>
+    <string name="guest_name">%1$s</string>
+    <string name="guest_age">Возраст: %1$s</string>
+    <string name="guest_gender">Пол: %1$s</string>
+    <string name="male_gender_short">м.</string>
+    <string name="female_gender_short">ж.</string>
+    <string name="table_number">Стол №%1$s</string>
+    <string name="add_guest">Добавить гостя</string>
+    <string name="add_table">Добавить стол</string>
 </resources>
