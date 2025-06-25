@@ -42,34 +42,36 @@ private fun Content(
             TableInfo(
                 table = table,
                 onDelete = { processEvent(MapScreenEvent.DeleteTable(table)) },
-                onDeleteGuest = { guest -> processEvent(MapScreenEvent.DeleteGuest(guest)) },
+                onDeleteGuest = { guest -> processEvent(MapScreenEvent.DeleteGuest(guest, table)) },
                 onAddGuest = {
-                    processEvent(MapScreenEvent.UpdateBottomSheetState(MapScreenState.BottomSheetType.AddTable))
+                    processEvent(MapScreenEvent.UpdateDialogState(MapScreenState.DialogState.AddGuest(table)))
                 },
             )
         }
 
         item {
             AddTableButton(
+                modifier = Modifier.padding(dimensionResource(R.dimen.table_padding)),
                 onClick = {
-                    processEvent(MapScreenEvent.UpdateBottomSheetState(MapScreenState.BottomSheetType.AddTable))
+                    processEvent(MapScreenEvent.UpdateDialogState(MapScreenState.DialogState.AddTable))
                 }
             )
         }
     }
 
-    if (state.bottomSheetState == MapScreenState.BottomSheetType.AddTable) {
+    if (state.dialogState is MapScreenState.DialogState.AddTable) {
         TableCreatorDialog(
             viewModel = viewModel(factory = LocalAppComponent.provideTableCreatorViewModel()),
             onDismiss = {
-                processEvent(MapScreenEvent.UpdateBottomSheetState(MapScreenState.BottomSheetType.None))
+                processEvent(MapScreenEvent.UpdateDialogState(MapScreenState.DialogState.None))
             },
         )
-    } else if (state.bottomSheetState == MapScreenState.BottomSheetType.AddGuest) {
+    } else if (state.dialogState is MapScreenState.DialogState.AddGuest) {
         GuestCreatorDialog(
+            table = state.dialogState.table,
             viewModel = viewModel(factory = LocalAppComponent.provideGuestCreatorViewModel()),
             onDismiss = {
-                processEvent(MapScreenEvent.UpdateBottomSheetState(MapScreenState.BottomSheetType.None))
+                processEvent(MapScreenEvent.UpdateDialogState(MapScreenState.DialogState.None))
             },
         )
     }

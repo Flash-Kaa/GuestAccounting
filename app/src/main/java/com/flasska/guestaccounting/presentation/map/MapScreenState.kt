@@ -4,12 +4,11 @@ import com.flasska.guestaccounting.domain.model.Table
 
 internal data class MapScreenState(
     val tables: List<Table> = emptyList(),
-    val bottomSheetState: BottomSheetType = BottomSheetType.None,
+    val dialogState: DialogState = DialogState.None,
 ) {
-    enum class BottomSheetType {
-        AddTable,
-        AddGuest,
-        None,
-        ;
+    sealed interface DialogState {
+        data object AddTable : DialogState
+        data class AddGuest(val table: Table) : DialogState
+        data object None : DialogState
     }
 }

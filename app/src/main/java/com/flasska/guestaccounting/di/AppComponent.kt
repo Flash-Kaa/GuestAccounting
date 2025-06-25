@@ -9,7 +9,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [VMFactoryModule::class])
+@Component(modules = [VMFactoryModule::class, DataModule::class])
 internal interface AppComponent {
 
     fun provideMapViewModelFactory(): MapViewModel.Factory

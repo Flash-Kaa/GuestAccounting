@@ -37,6 +37,7 @@ fun GuestShortImage(
 private fun PreviewGuestShortImage() {
     GuestAccountingTheme {
         Scaffold {
+            it
             GuestShortImage(
                 guest = Guest(
                     name = "Name 1234",

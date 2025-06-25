@@ -11,7 +11,7 @@
     <dimen name="table_content_padding">16dp</dimen>
     <dimen name="table_padding">16dp</dimen>
     <dimen name="short_images_space">12dp</dimen>
-    <dimen name="min_short_images_size">12dp</dimen>
+    <dimen name="max_short_images_size">48dp</dimen>
     <dimen name="add_table_button_arrangement_space">24dp</dimen>
     <dimen name="add_table_button_padding">4dp</dimen>
     <dimen name="add_table_button_content_padding">8dp</dimen>

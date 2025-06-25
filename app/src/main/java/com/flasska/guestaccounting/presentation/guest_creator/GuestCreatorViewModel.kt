@@ -3,6 +3,7 @@ package com.flasska.guestaccounting.presentation.guest_creator
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.flasska.guestaccounting.domain.interfaces.GuestAccountingRepository
 import com.flasska.guestaccounting.domain.model.Guest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,13 +12,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class GuestCreatorViewModel(
+    private val guestAccountingRepository: GuestAccountingRepository,
 ): ViewModel() {
     private val _state = MutableStateFlow(GuestCreatorState())
     val state = _state.asStateFlow()
 
     fun processEvent(event: GuestCreatorEvent) {
         when (event) {
-            GuestCreatorEvent.Create -> create()
+            is GuestCreatorEvent.Create -> create(event)
             is GuestCreatorEvent.UpdateName -> updateName(event)
             is GuestCreatorEvent.UpdateAge -> updateAge(event)
             is GuestCreatorEvent.UpdateGender -> updateGender(event)
@@ -25,19 +27,24 @@ class GuestCreatorViewModel(
         }
     }
 
-    private fun create() {
-        if (state.value.buttonEnabled) {
-            val curValue = state.value
-            val guest = Guest(
-                name = curValue.name,
-                age = curValue.age,
-                gender = curValue.gender,
-                sideOfWedding = curValue.sideOfWedding,
-            )
+    private fun create(event: GuestCreatorEvent.Create) {
+        viewModelScope.launch(Dispatchers.Default) {
+            if (state.value.buttonEnabled) {
+                val curValue = state.value
+                val guest = Guest(
+                    name = curValue.name,
+                    age = curValue.age,
+                    gender = curValue.gender,
+                    sideOfWedding = curValue.sideOfWedding,
+                )
 
-            _state.update { GuestCreatorState() }
+                _state.update { GuestCreatorState() }
 
-            // TODO create
+                guestAccountingRepository.addGuest(
+                    guest = guest,
+                    tableNumber = event.value.number
+                )
+            }
         }
     }
 
@@ -94,10 +101,12 @@ class GuestCreatorViewModel(
     }
 
     class Factory(
+        private val guestAccountingRepository: GuestAccountingRepository,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return GuestCreatorViewModel(
+                guestAccountingRepository = guestAccountingRepository,
             ) as T
         }
     }

@@ -22,14 +22,14 @@ fun GuestsShortList(
     guests: List<Guest>,
 ) {
     AnimatedVisibility(
-        visible = opened.not() && guests.isNotEmpty(),
+        visible = opened && guests.isNotEmpty(),
         enter = expandVertically() + fadeIn(),
         exit = shrinkVertically() + fadeOut(),
     ) {
         BoxWithConstraints {
             val size = min(
                 a = maxWidth / guests.size - dimensionResource(R.dimen.short_images_space),
-                b = dimensionResource(R.dimen.min_short_images_size)
+                b = dimensionResource(R.dimen.max_short_images_size)
             )
 
             Row(

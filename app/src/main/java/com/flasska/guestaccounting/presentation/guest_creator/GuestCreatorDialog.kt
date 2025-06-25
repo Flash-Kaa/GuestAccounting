@@ -1,13 +1,17 @@
 package com.flasska.guestaccounting.presentation.guest_creator
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -15,17 +19,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.flasska.guestaccounting.R
 import com.flasska.guestaccounting.domain.model.Guest
+import com.flasska.guestaccounting.domain.model.Table
 
 @Composable
 fun GuestCreatorDialog(
+    table: Table,
     viewModel: GuestCreatorViewModel,
     onDismiss: () -> Unit,
 ) {
@@ -35,11 +43,13 @@ fun GuestCreatorDialog(
         state = state,
         processEvent = viewModel::processEvent,
         onDismiss = onDismiss,
+        table = table,
     )
 }
 
 @Composable
 private fun Content(
+    table: Table,
     state: GuestCreatorState,
     processEvent: (GuestCreatorEvent) -> Unit,
     onDismiss: () -> Unit,
@@ -52,7 +62,10 @@ private fun Content(
                 space = dimensionResource(R.dimen.create_arrangement_space)
             ),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(dimensionResource(R.dimen.create_padding))
+            modifier = Modifier
+                .clip(RoundedCornerShape(dimensionResource(R.dimen.card_round)))
+                .background(MaterialTheme.colorScheme.background)
+                .padding(dimensionResource(R.dimen.create_padding))
         ) {
             Text(
                 text = stringResource(R.string.add_guest),
@@ -65,8 +78,9 @@ private fun Content(
             SizeOfWedding(processEvent, state)
 
             Button(
+                enabled = state.buttonEnabled,
                 onClick = {
-                    processEvent(GuestCreatorEvent.Create)
+                    processEvent(GuestCreatorEvent.Create(table))
                     onDismiss()
                 }
             ) {
@@ -92,7 +106,6 @@ private fun NameField(
 
         TextField(
             value = state.name,
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.NumberPassword),
             modifier = Modifier.fillMaxWidth(),
             onValueChange = {
                 processEvent(GuestCreatorEvent.UpdateName(it))
@@ -200,7 +213,9 @@ private fun RadioButtonLine(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.clickable(onClick = onClick)
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
     ) {
         RadioButton(
             selected = selected,
