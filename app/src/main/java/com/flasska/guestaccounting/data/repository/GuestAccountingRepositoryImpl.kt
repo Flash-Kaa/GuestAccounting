@@ -6,6 +6,7 @@ import com.flasska.guestaccounting.data.mapper.toModelDB
 import com.flasska.guestaccounting.domain.interfaces.GuestAccountingRepository
 import com.flasska.guestaccounting.domain.model.Guest
 import com.flasska.guestaccounting.domain.model.Table
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +16,9 @@ import kotlinx.coroutines.launch
 
 internal class GuestAccountingRepositoryImpl(
     private val databaseDao: GuestAccountingDao,
+    dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : GuestAccountingRepository {
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val coroutineScope = CoroutineScope(dispatcher)
 
     private val _tablesFlow = MutableStateFlow(emptyList<Table>())
     override val tablesFlow = _tablesFlow.asStateFlow()

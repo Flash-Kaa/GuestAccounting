@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.flasska.guestaccounting.domain.interfaces.GuestAccountingRepository
 import com.flasska.guestaccounting.domain.model.Guest
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 
 class GuestCreatorViewModel(
     private val guestAccountingRepository: GuestAccountingRepository,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ): ViewModel() {
     private val _state = MutableStateFlow(GuestCreatorState())
     val state = _state.asStateFlow()
@@ -28,7 +30,7 @@ class GuestCreatorViewModel(
     }
 
     private fun create(event: GuestCreatorEvent.Create) {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(dispatcher) {
             if (state.value.buttonEnabled) {
                 val curValue = state.value
                 val guest = Guest(
@@ -49,7 +51,7 @@ class GuestCreatorViewModel(
     }
 
     private fun updateName(event: GuestCreatorEvent.UpdateName) {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(dispatcher) {
             _state.update {
                 it.copy(
                     name = event.value,
@@ -60,7 +62,7 @@ class GuestCreatorViewModel(
     }
 
     private fun updateAge(event: GuestCreatorEvent.UpdateAge) {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(dispatcher) {
             _state.update {
                 it.copy(
                     age = event.value,
@@ -71,7 +73,7 @@ class GuestCreatorViewModel(
     }
 
     private fun updateGender(event: GuestCreatorEvent.UpdateGender) {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(dispatcher) {
             _state.update {
                 it.copy(
                     gender = event.value,
@@ -82,7 +84,7 @@ class GuestCreatorViewModel(
     }
 
     private fun updateSideOfWedding(event: GuestCreatorEvent.UpdateSideOfWedding) {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(dispatcher) {
             _state.update {
                 it.copy(
                     sideOfWedding = event.value,
