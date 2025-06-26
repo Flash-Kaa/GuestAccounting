@@ -38,7 +38,10 @@ private fun Content(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.arrangement_space)),
         modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.horizontal_padding)),
     ) {
-        items(state.tables) { table ->
+        items(
+            items = state.tables,
+            key = { it.number }
+        ) { table ->
             TableInfo(
                 table = table,
                 onDelete = { processEvent(MapScreenEvent.DeleteTable(table)) },
